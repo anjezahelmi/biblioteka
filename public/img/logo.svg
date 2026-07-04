@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5d488"/>
+      <stop offset="0.5" stop-color="#e8b34b"/>
+      <stop offset="1" stop-color="#c98500"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d3b8f"/>
+      <stop offset="1" stop-color="#0c1531"/>
+    </linearGradient>
+    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf8ea"/>
+      <stop offset="1" stop-color="#e9dcb8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Unaza e jashtme -->
+  <circle cx="120" cy="120" r="114" fill="url(#navy)"/>
+  <circle cx="120" cy="120" r="114" fill="none" stroke="url(#gold)" stroke-width="6"/>
+  <circle cx="120" cy="120" r="96" fill="none" stroke="url(#gold)" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- Yje (dy kokat e shqiponjës si simbol i thjeshtuar: yll i kuq flamuri) -->
+  <g fill="url(#gold)">
+    <path d="M120 22l3.2 7.4 8 .7-6 5.3 1.8 7.9-7-4.2-7 4.2 1.8-7.9-6-5.3 8-.7z"/>
+    <circle cx="63" cy="52" r="3"/>
+    <circle cx="177" cy="52" r="3"/>
+  </g>
+
+  <!-- Libri i hapur -->
+  <g>
+    <path d="M120 92c-14-10-36-13-52-11v66c16-2 38 1 52 11 14-10 36-13 52-11V81c-16-2-38 1-52 11z"
+          fill="url(#gold)" opacity="0.35" transform="translate(0 6)"/>
+    <path d="M120 88c-14-10-36-13-52-11v66c16-2 38 1 52 11z" fill="url(#page)"/>
+    <path d="M120 88c14-10 36-13 52-11v66c-16-2-38 1-52 11z" fill="#f3ead2"/>
+    <path d="M120 88v66" stroke="#b39a5d" stroke-width="2.5"/>
+    <!-- rreshtat -->
+    <g stroke="#b7a672" stroke-width="2" stroke-linecap="round" opacity="0.8">
+      <path d="M78 95c11-1 24 1 34 6M78 108c11-1 24 1 34 6M78 121c11-1 24 1 34 6M78 134c11-1 24 1 34 6"/>
+      <path d="M162 95c-11-1-24 1-34 6M162 108c-11-1-24 1-34 6M162 121c-11-1-24 1-34 6M162 134c-11-1-24 1-34 6"/>
+    </g>
+  </g>
+
+  <!-- Monogrami ED -->
+  <g font-family="Georgia, 'Times New Roman', serif" text-anchor="middle" fill="url(#gold)">
+    <text x="120" y="72" font-size="30" font-weight="bold" letter-spacing="2">E·D</text>
+  </g>
+
+  <!-- Kurora dafine -->
+  <g fill="none" stroke="url(#gold)" stroke-width="3" stroke-linecap="round">
+    <path d="M66 176c14 12 34 19 54 19s40-7 54-19"/>
+  </g>
+  <g fill="url(#gold)">
+    <ellipse cx="70" cy="180" rx="3.4" ry="7" transform="rotate(40 70 180)"/>
+    <ellipse cx="86" cy="190" rx="3.4" ry="7" transform="rotate(25 86 190)"/>
+    <ellipse cx="104" cy="196" rx="3.4" ry="7" transform="rotate(12 104 196)"/>
+    <ellipse cx="136" cy="196" rx="3.4" ry="7" transform="rotate(-12 136 196)"/>
+    <ellipse cx="154" cy="190" rx="3.4" ry="7" transform="rotate(-25 154 190)"/>
+    <ellipse cx="170" cy="180" rx="3.4" ry="7" transform="rotate(-40 170 180)"/>
+  </g>
+
+  <!-- Teksti rrethor -->
+  <defs>
+    <path id="arcTop" d="M120 120 m -84 0 a 84 84 0 1 1 168 0" fill="none"/>
+  </defs>
+  <text font-family="Georgia, serif" font-size="11" letter-spacing="2" fill="#f5d488">
+    <textPath href="#arcTop" startOffset="50%" text-anchor="middle">SHKOLLA 9-VJEÇARE · EDITH DURHAM · TIRANË</textPath>
+  </text>
+</svg>

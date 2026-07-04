@@ -1,0 +1,6 @@
+node_modules/
+.env
+seed/*.json
+!seed/sample-books.json
+seed/test1.txt
+seed/bageti_raw.txt

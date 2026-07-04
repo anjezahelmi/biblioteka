@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteka Digjitale — Shkolla 9-vjeçare "Edith Durham" Tiranë</title>
+  <link rel="icon" href="/img/logo-shkolla.jpeg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
+</head>
+<body>
+  <!-- Sfond i animuar -->
+  <div class="bg-scene" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ================= AUTH ================= -->
+  <section id="view-auth" class="view">
+    <div class="auth-wrap">
+      <div class="auth-brand">
+        <img src="/img/logo-shkolla.jpeg" alt="Logo e shkollës" class="auth-logo">
+        <h1 class="brand-title">Biblioteka<br><em>Edith Durham</em></h1>
+        <p class="brand-sub">Biblioteka digjitale e Shkollës 9-vjeçare "Edith Durham", Tiranë — libra shqip e të huaj, kudo dhe në çdo kohë.</p>
+        <div class="brand-quote">
+          <p>"Populli shqiptar meriton të njihet nga bota ashtu siç është — krenar, mikpritës dhe i pamposhtur."</p>
+          <span>— Edith Durham, "Brenda Shqipërisë"</span>
+        </div>
+      </div>
+      <div class="glass auth-card">
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login">Kyçu</button>
+          <button class="auth-tab" data-tab="register">Regjistrohu</button>
+        </div>
+        <form id="form-login" class="auth-form">
+          <label>Përdoruesi ose Email-i<input type="text" name="email" required placeholder="p.sh. admin"></label>
+          <label>Fjalëkalimi<input type="password" name="password" required placeholder="••••••••"></label>
+          <button class="btn btn-primary btn-block" type="submit">Hyr në bibliotekë</button>
+        </form>
+        <form id="form-register" class="auth-form hidden">
+          <label>Emri i plotë<input type="text" name="name" required placeholder="Emri Mbiemri"></label>
+          <label>Email<input type="email" name="email" required placeholder="emri@shembull.com"></label>
+          <label>Fjalëkalimi<input type="password" name="password" required minlength="6" placeholder="Të paktën 6 karaktere"></label>
+          <button class="btn btn-primary btn-block" type="submit">Krijo llogarinë</button>
+        </form>
+        <p id="auth-error" class="form-error hidden"></p>
+        <p class="guest-link"><a href="#/library">→ Shfleto bibliotekën si vizitor</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= APP SHELL ================= -->
+  <header id="topbar" class="topbar hidden">
+    <a href="#/library" class="topbar-brand">
+      <img src="/img/logo-shkolla.jpeg" alt="" class="topbar-logo">
+      <span>Biblioteka <em>Edith Durham</em></span>
+    </a>
+    <nav class="topbar-nav">
+      <a href="#/admin" data-nav="admin" id="nav-admin" class="hidden">Paneli</a>
+    </nav>
+    <div class="topbar-user">
+      <span id="user-chip" class="user-chip"></span>
+      <button id="btn-logout" class="btn btn-ghost btn-sm hidden">Dil</button>
+      <a id="btn-login" class="btn btn-primary btn-sm hidden" href="#/login">Kyçu</a>
+    </div>
+  </header>
+
+  <!-- ================= LIBRARY ================= -->
+  <section id="view-library" class="view hidden">
+    <div class="hero-parallax" id="hero-parallax">
+      <div class="hp-layer hp-photo" data-depth="0.5"></div>
+      <div class="hp-layer hp-tint"></div>
+      <div class="hp-layer hp-glow" data-depth="0.35"></div>
+      <div class="hp-particles" id="hp-particles" data-depth="0.25" aria-hidden="true"></div>
+      <div class="hp-content" data-depth="0.1">
+        <p class="hero-eyebrow">Shkolla 9-vjeçare "Edith Durham" · Tiranë</p>
+        <h2 class="hero-title">Zbulo botën<br>nëpërmjet <em>librave</em></h2>
+        <p class="hp-sub">Biblioteka digjitale e shkollës — e hapur për të gjithë, kudo dhe në çdo kohë.</p>
+        <div class="searchbar glass">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="search" type="search" placeholder="Kërko sipas titullit ose autorit…">
+        </div>
+      </div>
+      <div class="hp-fade"></div>
+    </div>
+    <div id="chips" class="chips"></div>
+    <div id="continue-wrap" class="section hidden">
+      <h3 class="section-title">Vazhdo leximin</h3>
+      <div id="continue-row" class="continue-row"></div>
+    </div>
+    <div class="section">
+      <h3 class="section-title">Të gjithë librat <span id="book-count" class="count-badge"></span></h3>
+      <div id="grid" class="grid"></div>
+      <p id="grid-empty" class="empty hidden">Asnjë libër nuk u gjet. Provo një kërkim tjetër.</p>
+    </div>
+  </section>
+
+  <!-- ================= READER ================= -->
+  <section id="view-reader" class="view hidden">
+    <div class="reader-bar glass">
+      <button id="reader-back" class="btn btn-ghost btn-sm">← Kthehu</button>
+      <div class="reader-meta">
+        <strong id="reader-title"></strong>
+        <span id="reader-author"></span>
+      </div>
+      <div class="reader-controls">
+        <button id="epub-prev" class="btn btn-ghost btn-sm hidden">‹ Faqja</button>
+        <button id="epub-next" class="btn btn-ghost btn-sm hidden">Faqja ›</button>
+        <a id="reader-download" class="btn btn-ghost btn-sm" download>Shkarko</a>
+      </div>
+    </div>
+    <div id="reader-progressbar"><div id="reader-progressfill"></div></div>
+    <div id="reader-stage" class="reader-stage"></div>
+  </section>
+
+  <!-- ================= ADMIN ================= -->
+  <section id="view-admin" class="view hidden">
+    <h2 class="page-title">Paneli i <em>Administratorit</em></h2>
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-atab="stats">Statistika</button>
+      <button class="admin-tab" data-atab="upload">Ngarko libër</button>
+      <button class="admin-tab" data-atab="books">Librat</button>
+      <button class="admin-tab" data-atab="users">Përdoruesit</button>
+      <button class="admin-tab" data-atab="logins">Hyrjet</button>
+    </div>
+
+    <div id="atab-stats" class="atab">
+      <div id="stat-tiles" class="stat-tiles"></div>
+      <div class="glass chart-card viz-root">
+        <h3 class="chart-title">Hyrje në sistem — 7 ditët e fundit</h3>
+        <div id="chart-logins" class="chart"></div>
+      </div>
+    </div>
+
+    <div id="atab-upload" class="atab hidden">
+      <form id="form-upload" class="glass admin-form">
+        <h3>Ngarko një libër të ri</h3>
+        <div class="form-row">
+          <label>Titulli<input type="text" name="title" required placeholder="p.sh. Bagëti e Bujqësia"></label>
+          <label>Autori<input type="text" name="author" placeholder="p.sh. Naim Frashëri"></label>
+        </div>
+        <div class="form-row">
+          <label>Kategoria<input type="text" name="category" list="cat-list" placeholder="p.sh. Poezi"></label>
+          <datalist id="cat-list"></datalist>
+        </div>
+        <label>Përshkrimi<textarea name="description" rows="3" placeholder="Një përshkrim i shkurtër i librit…"></textarea></label>
+        <div class="form-row">
+          <label class="file-label">Skedari i librit (PDF, EPUB, TXT, HTML)<input type="file" name="file" required accept=".pdf,.epub,.txt,.html,.htm"></label>
+          <label class="file-label">Kopertina (opsionale)<input type="file" name="cover" accept="image/*"></label>
+        </div>
+        <p class="copyright-note">⚖️ <strong>Kujdes të drejtat e autorit:</strong> ngarko vetëm libra në domen publik (autori ka vdekur para më shumë se 70 vjetësh), me licencë të lirë, ose me lejen e autorit/botuesit. Mos ngarko libra shkollorë a romane të mbrojtur me copyright.</p>
+        <button class="btn btn-primary" type="submit">Ngarko librin</button>
+        <p id="upload-msg" class="form-msg hidden"></p>
+      </form>
+    </div>
+
+    <div id="atab-books" class="atab hidden">
+      <div class="glass table-card">
+        <table class="table" id="table-books">
+          <thead><tr><th>Titulli</th><th>Autori</th><th>Kategoria</th><th>Formati</th><th>Lexime</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="atab-users" class="atab hidden">
+      <form id="form-newuser" class="glass admin-form admin-form-inline">
+        <h3>Krijo përdorues të ri</h3>
+        <div class="form-row form-row-4">
+          <label>Emri<input type="text" name="name" required></label>
+          <label>Email<input type="email" name="email" required></label>
+          <label>Fjalëkalimi<input type="text" name="password" required minlength="6"></label>
+          <label>Roli<select name="role"><option value="user">Nxënës / Mësues</option><option value="admin">Administrator</option></select></label>
+        </div>
+        <button class="btn btn-primary" type="submit">Krijo përdoruesin</button>
+        <p id="newuser-msg" class="form-msg hidden"></p>
+      </form>
+      <div class="glass table-card">
+        <table class="table" id="table-users">
+          <thead><tr><th>Emri</th><th>Email</th><th>Roli</th><th>Hyrje gjithsej</th><th>Hyrja e fundit</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="atab-logins" class="atab hidden">
+      <div class="glass table-card">
+        <table class="table" id="table-logins">
+          <thead><tr><th>Përdoruesi</th><th>Email</th><th>IP</th><th>Shfletuesi</th><th>Koha</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal: detajet e librit -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="glass modal-card" id="modal-card"></div>
+  </div>
+
+  <footer id="footer" class="footer hidden">
+    <p class="footer-legal">⚖️ Të gjithë librat në këtë bibliotekë janë vepra në <strong>domen publik</strong> ose të ngarkuara me lejen e mbajtësve të të drejtave, në përputhje me <strong>Ligjin nr. 35/2016 "Për të drejtat e autorit dhe të drejtat e tjera të lidhura me to"</strong>. Nëse mendoni se një përmbajtje cenon të drejtat tuaja, na njoftoni dhe ajo do të hiqet menjëherë.</p>
+    <p>© 2026 Shkolla 9-vjeçare "Edith Durham", Tiranë · Biblioteka Digjitale</p>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Bagëti e Bujqësi",
+    "author": "Naim Frashëri",
+    "description": "Poema madhore e Rilindjes Kombëtare (1886), himn i dashurisë për natyrën, tokën dhe jetën baritore shqiptare. Teksti i plotë nga Wikisource (domen publik).",
+    "category": "Poezi",
+    "format": "html",
+    "file_path": "/uploads/books/bageti-e-bujqesija.html"
+  },
+  {
+    "title": "Naim Frashëri (elegji)",
+    "author": "Andon Zako Çajupi",
+    "description": "Elegjia e njohur e Çajupit kushtuar vdekjes së Naim Frashërit — 'Vdiq Naimi, vdiq Naimi, moj e mjera Shqipëri!'. Domen publik.",
+    "category": "Poezi",
+    "format": "html",
+    "file_path": "/uploads/books/cajupi-naim-frasheri.html"
+  },
+  {
+    "title": "Edith Durham — Mbretëresha e Malësorëve",
+    "author": "Biblioteka e Shkollës",
+    "description": "Broshurë njohëse për jetën dhe veprën e Edith Durham (1863–1944), udhëtares dhe mikes së madhe të shqiptarëve, emrin e së cilës mban shkolla jonë.",
+    "category": "Histori",
+    "format": "html",
+    "file_path": "/uploads/books/edith-durham-jeta.html"
+  }
+]
