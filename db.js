@@ -4,6 +4,9 @@ const bcrypt = require('bcryptjs');
 
 const DB_NAME = process.env.PGDATABASE || 'libraria';
 
+// Në cloud (Neon, Render etj.) përdoret DATABASE_URL me SSL; lokalisht cilësimet e .env
+const CLOUD_URL = process.env.DATABASE_URL;
+
 const baseConfig = {
   host: process.env.PGHOST || 'localhost',
   port: Number(process.env.PGPORT) || 5432,
@@ -11,9 +14,12 @@ const baseConfig = {
   password: process.env.PGPASSWORD || 'postgres',
 };
 
-const pool = new Pool({ ...baseConfig, database: DB_NAME });
+const pool = CLOUD_URL
+  ? new Pool({ connectionString: CLOUD_URL, ssl: { rejectUnauthorized: false } })
+  : new Pool({ ...baseConfig, database: DB_NAME });
 
 async function ensureDatabase() {
+  if (CLOUD_URL) return; // databaza cloud ekziston tashmë
   const client = new Client({ ...baseConfig, database: 'postgres' });
   await client.connect();
   const res = await client.query('SELECT 1 FROM pg_database WHERE datname = $1', [DB_NAME]);
