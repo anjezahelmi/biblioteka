@@ -268,6 +268,11 @@ select option { background: var(--bg-2); }
 .mb-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .modal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; color: var(--ink-3); font-size: 1.6rem; cursor: pointer; line-height: 1; }
 .modal-close:hover { color: var(--ink); }
+.edit-form { display: flex; flex-direction: column; gap: 16px; }
+.edit-form h3 { font-family: "Playfair Display", serif; font-size: 1.4rem; }
+.edit-form label { display: flex; flex-direction: column; gap: 7px; font-size: 0.82rem; font-weight: 600; color: var(--ink-2); letter-spacing: 0.03em; }
+.td-actions { white-space: nowrap; }
+.td-actions .btn { margin-left: 6px; }
 
 /* ---------- READER ---------- */
 #view-reader { max-width: none; padding: 0; }

@@ -210,6 +210,48 @@ async function openModal(id) {
 function closeModal() { $('#modal').classList.add('hidden'); }
 $('.modal-backdrop').addEventListener('click', closeModal);
 
+/* ---------- Ndryshimi i librit (admin) ---------- */
+function openEditBook(book) {
+  $('#modal-card').innerHTML = `
+    <button class="modal-close" id="modal-close">×</button>
+    <form id="form-editbook" class="edit-form">
+      <h3>✎ Ndrysho librin</h3>
+      <label>Titulli<input type="text" name="title" required value="${esc(book.title)}"></label>
+      <label>Autori<input type="text" name="author" required value="${esc(book.author)}"></label>
+      <label>Kategoria<input type="text" name="category" required value="${esc(book.category)}" list="cat-list"></label>
+      <label>Përshkrimi<textarea name="description" rows="4">${esc(book.description)}</textarea></label>
+      <label class="file-label">Kopertinë e re (opsionale — lëre bosh për ta mbajtur të vjetrën)
+        <input type="file" name="cover" accept="image/*"></label>
+      <div class="mb-actions">
+        <button class="btn btn-primary" type="submit">Ruaj ndryshimet</button>
+        <button class="btn btn-ghost" type="button" id="edit-cancel">Anulo</button>
+      </div>
+      <p id="editbook-msg" class="form-msg hidden"></p>
+    </form>`;
+  $('#modal').classList.remove('hidden');
+  $('#modal-close').onclick = closeModal;
+  $('#edit-cancel').onclick = closeModal;
+  $('#form-editbook').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = $('#editbook-msg');
+    msg.className = 'form-msg'; msg.textContent = 'Duke ruajtur…'; msg.classList.remove('hidden');
+    try {
+      const fd = new FormData(e.target);
+      const res = await fetch('/api/books/' + book.id, {
+        method: 'PUT',
+        headers: { Authorization: 'Bearer ' + TOKEN },
+        body: fd,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Gabim gjatë ruajtjes.');
+      closeModal();
+      loadAdmin();
+    } catch (err) {
+      msg.classList.add('err'); msg.textContent = err.message;
+    }
+  });
+}
+
 /* ---------- Reader ---------- */
 let progressTimer = null;
 let currentBookId = null;
@@ -346,13 +388,22 @@ async function loadAdmin() {
       <td>${esc(b.category)}</td>
       <td>${esc(b.format).toUpperCase()}</td>
       <td>${b.views}</td>
-      <td><button class="btn btn-danger btn-sm" data-del-book="${b.id}">Fshi</button></td>
+      <td class="td-actions">
+        <button class="btn btn-ghost btn-sm" data-edit-book="${b.id}">✎ Ndrysho</button>
+        <button class="btn btn-danger btn-sm" data-del-book="${b.id}">Fshi</button>
+      </td>
     </tr>`).join('');
   $$('#table-books [data-del-book]').forEach((btn) =>
     btn.addEventListener('click', async () => {
       if (!confirm('Të fshihet ky libër?')) return;
       await api('/books/' + btn.dataset.delBook, { method: 'DELETE' });
       loadAdmin();
+    })
+  );
+  $$('#table-books [data-edit-book]').forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const book = booksData.books.find((x) => x.id === Number(btn.dataset.editBook));
+      if (book) openEditBook(book);
     })
   );
 
